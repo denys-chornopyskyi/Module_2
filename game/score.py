@@ -7,6 +7,9 @@ from .settings import RESULTS_FILE
 
 
 class DataStorage(ABC):
+    """
+    abstract base class for working with files
+    """
     @abstractmethod
     def save(self):
         pass
@@ -17,6 +20,7 @@ class DataStorage(ABC):
 
 
 class FileCheckMixin():
+    """Mixin that ensures file exists """
     def _ensure_file_exists(self, file_path, file_text=''):
         if not os.path.exists(file_path):
             with open(file_path, 'x', encoding='utf-8') as f:
@@ -24,6 +28,9 @@ class FileCheckMixin():
 
 
 class JSONDataStorage(DataStorage, FileCheckMixin):
+    """Base class for working with JSON files
+        provides common save/load method
+    """
     def __init__(self, filename):
         self.path = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, filename))
 
@@ -39,6 +46,7 @@ class JSONDataStorage(DataStorage, FileCheckMixin):
         
 
 class JSONResultStorage(JSONDataStorage):
+    """class for saving and load game result with JSON"""
     def __init__(self, filename):
         super().__init__(filename)
 

@@ -1,12 +1,21 @@
 from abc import ABC, abstractmethod
 
-from .exceptions import InvalidNumberError, InvalidRollError
+from .exceptions import OutOfRangeError, InvalidRollError
 
 
 class Validator(ABC):
-    
+    """
+    Abstact base class for input validators
+
+    this class defines common interface for all validators.
+    subclass must implement validate method 
+    """
     @abstractmethod
     def validate(self, value: str):
+        """
+        Validate the given value
+        if number is valid returns true otherwise raises exception.
+        """   
         pass
 
         
@@ -36,4 +45,4 @@ class RangeValidator(NumValidator):
         super().validate(value)
         if self.min_val <= int(value) <= self.max_val:
             return True
-        raise InvalidNumberError(value, self.min_val, self.max_val)
+        raise OutOfRangeError(value, self.min_val, self.max_val)

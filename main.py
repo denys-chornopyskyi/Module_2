@@ -16,14 +16,11 @@ class MenuOption(ABC):
 class StartGame(MenuOption):
     def execute(self):
         player_name = input('Введите свое имя: ')
-        player = Player(player_name)
-        computer = Computer()
-        storage = JSONResultStorage(RESULTS_FILE)
         selected_mode = choose_game_mode()
         game = GameSession(
-            player=player, 
-            opponent=computer, 
-            storage=storage, 
+            player=Player(player_name), 
+            opponent=Computer(), 
+            storage=JSONResultStorage(RESULTS_FILE), 
             mode_name=selected_mode.title, 
             rounds=selected_mode.rounds
             )
